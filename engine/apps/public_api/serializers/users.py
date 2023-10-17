@@ -45,6 +45,7 @@ class UserSerializer(serializers.ModelSerializer, EagerLoadingMixin):
     slack = SlackUserIdentitySerializer(read_only=True, source="slack_user_identity")
     role = serializers.SerializerMethodField()  # LEGACY, should be removed eventually
     is_phone_number_verified = serializers.SerializerMethodField()
+    phone_number = serializers.ReadOnlyField(read_only=True, source="_verified_phone_number")
 
     SELECT_RELATED = [
         "slack_user_identity",
@@ -53,7 +54,7 @@ class UserSerializer(serializers.ModelSerializer, EagerLoadingMixin):
 
     class Meta:
         model = User
-        fields = ["id", "email", "slack", "username", "role", "is_phone_number_verified"]
+        fields = ["id", "email", "slack", "username", "role", "is_phone_number_verified", "phone_number"]
 
     @staticmethod
     def get_role(obj):

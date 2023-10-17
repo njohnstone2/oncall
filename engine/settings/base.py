@@ -818,6 +818,7 @@ if IS_OPEN_SOURCE:
     PHONE_PROVIDERS["zvonok"] = "apps.zvonok.phone_provider.ZvonokPhoneProvider"
 
 PHONE_PROVIDER = os.environ.get("PHONE_PROVIDER", default=DEFAULT_PHONE_PROVIDER)
+PHONE_NUMBER_PROTECTED = getenv_boolean("PHONE_NUMBER_PROTECTED", default=True)
 
 ZVONOK_API_KEY = os.getenv("ZVONOK_API_KEY", None)
 ZVONOK_CAMPAIGN_ID = os.getenv("ZVONOK_CAMPAIGN_ID", None)
