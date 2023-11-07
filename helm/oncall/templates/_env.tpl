@@ -26,6 +26,10 @@
   value: {{ .Values.broker.type | default "rabbitmq" }}
 - name: GRAFANA_API_URL
   value: {{ include "snippet.grafana.url" . | quote }}
+{{- if .protectPhoneNumbers }}
+- name: PHONE_NUMBER_PROTECTED
+  value: {{ .protectPhoneNumbers | quote }}
+{{- end }}
 {{- end }}
 
 {{- define "snippet.oncall.secret.name" -}}

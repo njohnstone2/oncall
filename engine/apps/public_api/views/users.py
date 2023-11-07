@@ -7,6 +7,7 @@ from rest_framework.viewsets import ReadOnlyModelViewSet
 
 from apps.api.permissions import LegacyAccessControlRole
 from apps.auth_token.auth import ApiTokenAuthentication, UserScheduleExportAuthentication
+from apps.base.utils import live_settings
 from apps.public_api.custom_renderers import CalendarRenderer
 from apps.public_api.serializers import FastUserSerializer, UserSerializer
 from apps.public_api.tf_sync import is_request_from_terraform, sync_users_on_tf_request
@@ -73,6 +74,9 @@ class UserView(RateLimitHeadersMixin, ShortSerializerMixin, ReadOnlyModelViewSet
             user = User.objects.get(public_primary_key=public_primary_key, organization=organization)
         except User.DoesNotExist:
             raise NotFound
+
+        if not live_settings.PHONE_NUMBER_PROTECTED:
+            user.phone_number = None
 
         return user
 
